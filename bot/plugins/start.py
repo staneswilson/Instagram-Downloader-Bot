@@ -14,7 +14,7 @@ async def start(ctx: BotContext[CommandEvent]):
         reply_text = f"Hello @{user.username}! You need to join the community to use this bot."
         reply_markup = InlineMarkup([
         [
-            InlineKeyboardButton("Join Community🌐", url=community_url)
+            InlineKeyboardButton("🌐Join Community🌐", url=community_url)
         ],
         [
             InlineKeyboardButton("🔁Try Again🔁", callback_data="refresh")
