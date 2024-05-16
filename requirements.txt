@@ -1,0 +1,5 @@
+swibots
+python-dotenv
+pydantic==2.6.4
+Pillow>=8.1.1
+instagrapi==2.1.1
