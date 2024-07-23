@@ -1,4 +1,4 @@
-## Instagram Downloader Bot Script Documentation
+## Instagram Downloader Bot
 
 This Python script utilizes the Instagrapi library to download Instagram content (photos and videos) within the Switch Chats and Communities platform. By leveraging an Instagram account's credentials, the script simplifies saving desired content directly from the app.
 
