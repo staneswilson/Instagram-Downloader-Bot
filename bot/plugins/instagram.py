@@ -27,7 +27,10 @@ async def download_media(url):
                 download_function = download_function.get(minfo.product_type)
 
             if download_function:
-                file = download_function(media_pk, downloads)
+                if minfo.product_type == 8:
+                    file = download_function(media_pk, downloads, minfo)
+                else:
+                    file = list(download_function(media_pk, downloads))
             else:
                 LOGGER.info(f"Media type not supported: {minfo.media_type}")
                 raise Exception

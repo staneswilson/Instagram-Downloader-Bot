@@ -32,20 +32,19 @@ async def download(ctx: BotContext[MessageEvent]):
     
     try:
         reply = await message.reply_text("Downloading media...")
-        path = await download_media(text)
-
-        if not path:
-            raise FileNotFoundError("No file found at the provided path.")
-
+        paths = await download_media(text)
+        items = []
+        for path in paths:
+            if not path:
+                raise FileNotFoundError("No file found at the provided path.")
+            path_n = await rename_file(path)
+            items.append(path_n)
         await reply.edit_text("Media downloaded successfully. Uploading...")
-
-        path_n = await rename_file(path)
-        LOGGER.info(f"Renamed file path: {path_n}")
-
-        await message.reply_media(document=path_n, blocking=True)
+        
+        for item in items:
+            await message.reply_media(document=item, blocking=True)
+            os.remove(item)
         await reply.delete()
-
-        os.remove(path_n)
     except FileNotFoundError as e:
         await reply.edit_text("Failed to download media. Please ensure the URL is correct and the media is publicly accessible.")
         LOGGER.error(f"FileNotFoundError: {e}")
