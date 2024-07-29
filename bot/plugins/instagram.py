@@ -4,9 +4,10 @@ from .. import LOGGER, insta, downloads
 
 async def download_media(url):
     try:
+        file = []
         if "stories" in url:
             media_pk = insta.story_pk_from_url(url)
-            file = insta.story_download(story_pk=media_pk, folder=downloads)
+            file.append(insta.story_download(story_pk=media_pk, folder=downloads))
         else:
             media_pk = insta.media_pk_from_url(url)
             minfo = insta.media_info(media_pk)
@@ -25,12 +26,12 @@ async def download_media(url):
 
             if isinstance(download_function, dict):
                 download_function = download_function.get(minfo.product_type)
-
+            
             if download_function:
                 if minfo.product_type == 8:
                     file = download_function(media_pk, downloads, minfo)
                 else:
-                    file = list(download_function(media_pk, downloads))
+                    file.append(download_function(media_pk, downloads))
             else:
                 LOGGER.info(f"Media type not supported: {minfo.media_type}")
                 raise Exception
